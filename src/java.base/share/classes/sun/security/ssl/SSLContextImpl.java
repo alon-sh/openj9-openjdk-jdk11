@@ -542,20 +542,22 @@ public abstract class SSLContextImpl extends SSLContextSpi {
 
         static {
             if (SunJSSE.isFIPS()) {
-                supportedProtocols = Arrays.asList(
-                    ProtocolVersion.TLS13,
-                    ProtocolVersion.TLS12,
-                    ProtocolVersion.TLS11,
-                    ProtocolVersion.TLS10
-                );
 
-                serverDefaultProtocols = getAvailableProtocols(
-                        new ProtocolVersion[] {
-                    ProtocolVersion.TLS13,
-                    ProtocolVersion.TLS12,
-                    ProtocolVersion.TLS11,
-                    ProtocolVersion.TLS10
-                });
+                    // RH1860986: TLSv1.3 key derivation not supported with
+                    // the Security Providers available in system FIPS mode.
+                    supportedProtocols = Arrays.asList(
+                        ProtocolVersion.TLS12,
+                        ProtocolVersion.TLS11,
+                        ProtocolVersion.TLS10
+                    );
+
+                    serverDefaultProtocols = getAvailableProtocols(
+                            new ProtocolVersion[] {
+                        ProtocolVersion.TLS12,
+                        ProtocolVersion.TLS11,
+                        ProtocolVersion.TLS10
+                    });
+
             } else {
                 supportedProtocols = Arrays.asList(
                     ProtocolVersion.TLS13,
@@ -621,7 +623,6 @@ public abstract class SSLContextImpl extends SSLContextSpi {
         static ProtocolVersion[] getSupportedProtocols() {
             if (SunJSSE.isFIPS()) {
                 return new ProtocolVersion[] {
-                        ProtocolVersion.TLS13,
                         ProtocolVersion.TLS12,
                         ProtocolVersion.TLS11,
                         ProtocolVersion.TLS10
@@ -950,7 +951,6 @@ public abstract class SSLContextImpl extends SSLContextSpi {
         static ProtocolVersion[] getProtocols() {
             if (SunJSSE.isFIPS()) {
                 return new ProtocolVersion[]{
-                        ProtocolVersion.TLS13,
                         ProtocolVersion.TLS12,
                         ProtocolVersion.TLS11,
                         ProtocolVersion.TLS10

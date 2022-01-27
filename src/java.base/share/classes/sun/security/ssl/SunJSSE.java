@@ -195,8 +195,10 @@ public abstract class SunJSSE extends java.security.Provider {
             "sun.security.ssl.SSLContextImpl$TLS11Context", null, null);
         ps("SSLContext", "TLSv1.2",
             "sun.security.ssl.SSLContextImpl$TLS12Context", null, null);
-        ps("SSLContext", "TLSv1.3",
-            "sun.security.ssl.SSLContextImpl$TLS13Context", null, null);
+	if (!isFIPS()) {
+            ps("SSLContext", "TLSv1.3",
+                "sun.security.ssl.SSLContextImpl$TLS13Context", null, null);
+	}
         ps("SSLContext", "TLS",
             "sun.security.ssl.SSLContextImpl$TLSContext",
             (isfips? null : createAliases("SSL")), null);
