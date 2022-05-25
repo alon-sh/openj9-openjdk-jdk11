@@ -71,7 +71,7 @@ public final class NativePRNG extends SecureRandomSpi {
     private static final Debug debug = Debug.getInstance("provider");
 
     // name of the pure random file (also used for setSeed())
-    private static final String NAME_RANDOM = "/dev/random";
+    private static final String NAME_RANDOM = "/dev/urandom";
 
     // singleton instance or null if not available
     private static final RandomIO INSTANCE = initIO();
